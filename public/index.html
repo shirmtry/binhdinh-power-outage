@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="HTK">
+  <meta name="last-updated" content="2026-11-09">
+  <meta name="description" content="Bản đồ mất điện sau bão 2026 tại Bình Định — mô phỏng lan truyền mất điện 11 huyện/thị xã bằng C WebAssembly. HTK 0396241674.">
+  <title>Bản đồ mất điện Bình Định 2026 · HTK</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <a class="brand" href="/">⚡ Bình Định Power Outage</a>
+    <nav>
+      <a href="/">Trang chủ</a>
+      <a href="/about">Giới thiệu</a>
+      <a class="btn-hotline" href="tel:0396241674">📞 Liên hệ HTK</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Bản đồ mất điện sau bão — Bình Định 2026</h1>
+      <p class="updated">Cập nhật: 09/11/2026</p>
+      <p>
+        Bão số 9 và số 10 tháng 10–11/2026 đổ bộ Quy Nhơn – Phù Cát – Hoài Nhơn,
+        kết hợp lũ sông Kôn dâng cao và sạt lở vùng núi An Lão, Vĩnh Thạnh, Tây Sơn,
+        đã gây mất điện diện rộng toàn tỉnh Bình Định từ 3 đến 7 ngày.
+        Hàng trăm nghìn hộ dân thiếu điện sinh hoạt, trạm bơm ngập úng ngừng hoạt động,
+        nuôi trồng thủy sản và cấp nước đô thị bị đình trệ.
+        Công cụ này mô phỏng quá trình lan truyền và phục hồi mất điện trên 11 huyện/thị xã,
+        giúp bà con ước tính thời gian có điện trở lại để chủ động dự trữ nước, nhiên liệu và lương thực.
+      </p>
+    </section>
+
+    <section class="panel">
+      <h2>Mô phỏng phục hồi điện</h2>
+      <p class="mock-label">Dữ liệu mô phỏng – cập nhật 09/11/2026</p>
+      <div class="controls">
+        <label for="days">Số ngày sau bão: <strong id="days-value">3</strong> ngày</label>
+        <input type="range" id="days" min="0" max="10" step="1" value="3">
+        <label for="decay">Tốc độ phục hồi mỗi ngày (decay): <strong id="decay-value">0.30</strong></label>
+        <input type="number" id="decay" min="0" max="0.9" step="0.05" value="0.30">
+        <button id="btn-run" type="button">Tính lại bản đồ</button>
+      </div>
+      <p id="wasm-status" class="status">Đang nạp module WebAssembly (C)…</p>
+
+      <div class="map-wrap">
+        <svg id="map" viewBox="0 0 600 760" role="img" aria-label="Bản đồ mất điện 11 huyện thị xã Bình Định"></svg>
+        <aside class="legend">
+          <h3>Chú giải cấp độ</h3>
+          <ul id="legend-list"></ul>
+          <p class="hint">Bản đồ cách điệu, không dùng cho mục đích hành chính.</p>
+        </aside>
+      </div>
+
+      <div class="table-wrap">
+        <table id="result-table">
+          <thead>
+            <tr><th>Huyện / Thị xã / TP</th><th>Mất điện ban đầu</th><th>Còn mất điện</th><th>Cấp độ</th><th>Ước tính khôi phục</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="note">Tính toán thực hiện bằng hàm C <code>outage_level(initial_down, days, decay)</code> biên dịch sang WebAssembly. Dữ liệu mô phỏng – cập nhật 09/11/2026, không phải số liệu chính thức của ngành điện.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 <a href="https://zalo.me/0396241674" target="_blank" rel="noopener">HTK</a> · Hotline/Zalo: <a href="tel:0396241674">0396241674</a> · Email: <a href="mailto:htk.contact@gmail.com">htk.contact@gmail.com</a></p>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
